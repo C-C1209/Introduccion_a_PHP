@@ -30,7 +30,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Inicio</h1>
+            <h1>Usuarios</h1>
           </div>
          
         </div>
@@ -43,7 +43,7 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Title</h3>
+          <h3 class="card-title">Agregar Usuarios</h3>
 
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -55,15 +55,65 @@
           </div>
         </div>
         <div class="card-body">
-          Start creating your amazing application!
+          <form action="" class="row">
+            <div class="col-4">
+                <label for="">Nombre</label>
+                <input type="text" class="form-control" placeholder="inserta tu Nombre">
+            </div>
+            <div class="col-4">
+                <label for="">Apellido</label>
+                <input type="text" class="form-control" placeholder="inserta tu Apellido">
+            </div>
+            <div class="col-4">
+                <label for="">Email</label>
+                <input type="email" class="form-control" placeholder="inserta tu E-Mail">
+            </div>
+            <div class="col-4">
+                <label for="">Password</label>
+                <input type="password" class="form-control" placeholder="password">
+            </div>
+            <div class="col-4">
+                <label for="">Confirma tu password</label>
+                <input type="password" class="form-control" placeholder="confirma tu password">
+            </div>
+            <div class="col-4 p-2">
+            <br>
+                <button class="btn btn-primary"><i class="fa fa-plus"></i> Insertar</button>
+            </div>
+
+          </form>
         </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-          Footer
-        </div>
-        <!-- /.card-footer-->
       </div>
       <!-- /.card -->
+      <h2 class="subtitle"> Usuarios</h2>
+      <table class="table">
+        <thead>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th></th>
+        </thead>
+        <tbody>
+        <?php
+          for($i=0;$i<10;$i++){
+
+          
+        ?>
+            <tr>
+                <td>1</td>
+                <td>Cristian Meza</td>
+                <td>cristianmeza@gmail.com</td>
+                <td>*****</td>
+                <td>
+                <button class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></button>
+                <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                </td>
+            </tr>
+
+        <?php }?>
+        </tbody>
+      </table>
 
     </section>
     <!-- /.content -->
