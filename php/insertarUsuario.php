@@ -11,7 +11,7 @@ $p2 = $_POST['p2'];
 
 if($pass != $p2){
     echo "el password es diferente";
-    header("Location: ../usuarios.php?error= Los comapos no coinciden");
+    header("Location: ../usuarios.php?error= Los campos no coinciden");
 }else{
     $pass=sha1($pass);
     $conexion -> query("insert into usuarios (nombre, apellidos, email, password, img_perfil)

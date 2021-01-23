@@ -6,7 +6,7 @@ if(!isset($_SESSION['userData'])){
 $userData=$_SESSION['userData'];
 
 include "./php/conexion.php";
-$resultado= $conexion-> query("select * from usuarios order by id DESC") or die($conexion->error);
+$resultado= $conexion-> query("select * from productos order by id DESC") or die($conexion->error);
 
 
 
@@ -44,7 +44,7 @@ $resultado= $conexion-> query("select * from usuarios order by id DESC") or die(
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Usuarios</h1>
+            <h1>Productos</h1>
           </div>
          
         </div>
@@ -57,7 +57,7 @@ $resultado= $conexion-> query("select * from usuarios order by id DESC") or die(
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Agregar Usuarios</h3>
+          <h3 class="card-title">Agregar Producto</h3>
 
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -86,28 +86,26 @@ $resultado= $conexion-> query("select * from usuarios order by id DESC") or die(
             }
           ?>
           
-          <form action="./php/insertarUsuario.php" class="row" method="POST">
+          <form action="./php/insertarProducto.php" class="row" method="POST" enctype="multipart/form-data">
             <div class="col-4">
                 <label for="">Nombre</label>
-                <input type="text" class="form-control" placeholder="inserta tu Nombre" name="nombre" id="txtnombre" required=""><!--name es para php    id es para javascript o css -->
+                <input type="text" class="form-control" placeholder="inserta el Nombre" name="nombre" id="txtnombre" required=""><!--name es para php    id es para javascript o css -->
             </div>
             <div class="col-4">
-                <label for="">Apellido</label>
-                <input type="text" class="form-control" placeholder="inserta tu Apellido" name="ap" required="">
+                <label for="">Precio</label>
+                <input type="number" class="form-control" placeholder="inserta el precio" name="precio" required="">
             </div>
             <div class="col-4">
-                <label for="">Email</label>
-                <input type="email" class="form-control" placeholder="inserta tu E-Mail" name="mail" required="">
+                <label for="">Inventario</label>
+                <input type="number" class="form-control" placeholder="inserta el inventario" 
+                min="1" name="inventario" required="">
             </div>
             <div class="col-4">
-                <label for="">Password</label>
-                <input type="password" class="form-control" placeholder="password" name="pass" required="">
+                <label for="">imagen</label>
+                <input type="file" class="form-control" placeholder="imagen" name="imagen" required="">
             </div>
-            <div class="col-4">
-                <label for="">Confirma tu password</label>
-                <input type="password" class="form-control" placeholder="confirma tu password" name="p2" required="">
-            </div>
-            <div class="col-4 p-2">
+            
+            <div class="col-12 p-2">
             <br>
                 <button class="btn btn-primary"><i class="fa fa-plus"></i> Insertar</button>
             </div>
@@ -116,13 +114,12 @@ $resultado= $conexion-> query("select * from usuarios order by id DESC") or die(
         </div>
       </div>
       <!-- /.card -->
-      <h2 class="subtitle"> Usuarios</h2>
+      <h2 class="subtitle"> Productos</h2>
       <table class="table">
         <thead>
-            <th>Id</th>
             <th>Nombre</th>
-            <th>Email</th>
-            <th>Password</th>
+            <th>Precio</th>
+            <th>Inventario</th>
             <th></th>
         </thead>
         <tbody>
@@ -132,17 +129,19 @@ $resultado= $conexion-> query("select * from usuarios order by id DESC") or die(
           
         ?>
             <tr>
-                <td><?php echo $fila['id'];?></td>
-                <td><?php echo $fila['nombre'].' '.$fila['apellidos'];?></td>
-                <td><?php echo $fila['email']?></td>
-                <td><?php echo $fila['password']?></td>
+                <td>
+                    <img src="./img/productos/<?php echo $fila['imagen'];?>" alt="" width="50px" height="50px">
+                    <?php echo $fila['nombre'];?>
+                </td>
+                <td><?php echo $fila['precio'];?></td>
+                <td><?php echo $fila['inventario'];?></td>
                 <td>
 
                 <button class="btn btn-sm btn-warning btnEdit"
                 data-id="<?php echo $fila['id'];?>"
                 data-nombre="<?php echo $fila['nombre'];?>"
-                data-ap="<?php echo $fila['apellidos'];?>"
-                data-email="<?php echo $fila['email'];?>"
+                data-precio="<?php echo $fila['precio'];?>"
+                data-inventario="<?php echo $fila['inventario'];?>"
                 data-toggle="modal" data-target="#modal-editar"><i class="fa fa-edit"></i></button>
                 
                 <button class="btn btn-sm btn-danger btnEliminar" 
@@ -166,14 +165,14 @@ $resultado= $conexion-> query("select * from usuarios order by id DESC") or die(
         <div class="modal-dialog">
           <div class="modal-content bg-danger">
             <div class="modal-header">
-              <h4 class="modal-title">Eliminar Usuario</h4>
+              <h4 class="modal-title">Eliminar producto</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <form action="./php/eliminarusuario.php" method="POST">
             <div class="modal-body">
-              <p>deseas eliminar el usuario?</p>
+              <p>deseas eliminar el producto?</p>
               <input type="hidden" id="idEliminar" name="id">
             </div>
             <div class="modal-footer justify-content-between">
@@ -195,7 +194,7 @@ $resultado= $conexion-> query("select * from usuarios order by id DESC") or die(
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title">Editar Usuario</h4>
+              <h4 class="modal-title">Editar producto</h4>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -205,23 +204,19 @@ $resultado= $conexion-> query("select * from usuarios order by id DESC") or die(
 
             <div class="col-12">
                 <label for="">Nombre</label>
-                <input type="text" class="form-control" placeholder="inserta tu Nombre" name="nombre" id="nombreEdit" required=""><!--name es para php    id es para javascript o css -->
+                <input type="text" class="form-control" placeholder="inserta el Nombre" name="nombre" id="nombreEdit" required=""><!--name es para php    id es para javascript o css -->
             </div>
             <div class="col-12">
-                <label for="">Apellido</label>
-                <input type="text" class="form-control" placeholder="inserta tu Apellido" name="ap" required id="apEdit">
+                <label for="">precio</label>
+                <input type="text" class="form-control" placeholder="inserta el precio" name="precio" required id="precioEdit">
             </div>
             <div class="col-12">
-                <label for="">Email</label>
-                <input type="email" class="form-control" placeholder="inserta tu E-Mail" name="mail" required id="mailEdit">
+                <label for="">inventario</label>
+                <input type="email" class="form-control" placeholder="inserta el inventario" name="inventario" required id="inventarioEdit">
             </div>
             <div class="col-12">
-                <label for="">Password</label>
-                <input type="password" class="form-control" placeholder="password" name="pass">
-            </div>
-            <div class="col-12">
-                <label for="">Confirma tu password</label>
-                <input type="password" class="form-control" placeholder="confirma tu password" name="p2">
+                <label for="">imagen</label>
+                <input type="file" class="form-control" placeholder="inserta tu nueva imagen" name="imagen" required id="imagenEdit">
             </div>
 
               <input type="hidden" id="idEditar" name="id">
@@ -261,13 +256,13 @@ $resultado= $conexion-> query("select * from usuarios order by id DESC") or die(
     $(".btnEdit").click(function(){
       var idEdit=$(this).data('id');
       var nombre=$(this).data('nombre');
-      var apellidos=$(this).data('ap');
-      var email=$(this).data('email');
+      var precio=$(this).data('precio');
+      var inventario=$(this).data('inventario');
 
       $("#idEditar").val(idEdit);
       $("#nombreEdit").val(nombre);
-      $("#apEdit").val(apellidos);
-      $("#mailEdit").val(email);
+      $("#precioEdit").val(precio);
+      $("#inventarioEdit").val(inventario);
       
     });
   });
